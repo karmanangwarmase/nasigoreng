@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasi Goreng Nikmat - Pesan Sekarang!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50, #4a235a);
+            color: #fff;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(231, 76, 60, 0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: #f1c40f;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            color: #ecf0f1;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            width: 350px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .item-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #f1c40f;
+        }
+        
+        .item-title {
+            font-size: 1.8rem;
+            color: #f1c40f;
+        }
+        
+        .item-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 2px solid rgba(241, 196, 15, 0.5);
+        }
+        
+        .placeholder-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #34495e, #7d3c98);
+            border: 2px dashed rgba(241, 196, 15, 0.5);
+            color: #f1c40f;
+            font-weight: bold;
+        }
+        
+        .item-details {
+            margin-bottom: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #f1c40f;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #f1c40f;
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background: #f39c12;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            margin: 0 10px;
+        }
+        
+        .total-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #f1c40f;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .order-btn {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .order-btn:hover {
+            background: linear-gradient(to right, #229954, #27ae60);
+            transform: scale(1.03);
+        }
+        
+        .whatsapp-icon {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #bdc3c7;
+        }
+        
+        .availability {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .available {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .limited {
+            background-color: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .menu-item {
+                width: 90%;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #27ae60;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-fire"></i> Nasi Goreng Nikmat</h1>
+            <p class="tagline">Rasakan kelezatan nasi goreng spesial dengan bahan-bahan pilihan terbaik. Diolah oleh chef berpengalaman dan diantar langsung ke rumah Anda!</p>
+        </header>
+        
+        <div class="menu-container">
+            <!-- Nasi Goreng Kampung -->
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-icon"><i class="fas fa-home"></i></div>
+                    <h2 class="item-title">Nasi Goreng Kampung</h2>
+                </div>
+                
+<div class="placeholder-image">
+    <img src="gb1.jpg" alt="Gambar 1">
+</div>
+                
+                <div class="item-details">
+                    <div class="detail-row">
+                        <span>Harga per porsi:</span>
+                        <span>Rp 13.000</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Tersedia:</span>
+                        <span class="availability available">10 porsi</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Level Pedas:</span>
+                        <span>Bisa disesuaikan</span>
+                    </div>
+                </div>
+                
+                <form class="order-form" id="form-kampung">
+                    <div class="form-group">
+                        <label for="qty-kampung">Jumlah Pesanan:</label>
+                        <div class="quantity-control">
+                            <button type="button" class="quantity-btn minus" data-target="qty-kampung">-</button>
+                            <input type="number" id="qty-kampung" class="quantity-input" value="1" min="1" max="10">
+                            <button type="button" class="quantity-btn plus" data-target="qty-kampung">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alamat-kampung">Alamat Pengantaran:</label>
+                        <textarea id="alamat-kampung" rows="3" placeholder="Masukkan alamat lengkap pengantaran..." required></textarea>
+                    </div>
+                    
+                    <div class="total-price" id="total-kampung">Total: Rp 13.000</div>
+                    
+                    <button type="submit" class="order-btn">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan via WhatsApp
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Nasi Goreng Babat -->
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-icon"><i class="fas fa-utensils"></i></div>
+                    <h2 class="item-title">Nasi Goreng Babat</h2>
+                </div>
+                
+<div class="placeholder-image">
+    <img src="gb2.jpg" alt="Gambar 2">
+</div>
+
+                
+                <div class="item-details">
+                    <div class="detail-row">
+                        <span>Harga per porsi:</span>
+                        <span>Rp 18.000</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Tersedia:</span>
+                        <span class="availability available">10 porsi</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Level Pedas:</span>
+                        <span>Bisa disesuaikan</span>
+                    </div>
+                </div>
+                
+                <form class="order-form" id="form-babat">
+                    <div class="form-group">
+                        <label for="qty-babat">Jumlah Pesanan:</label>
+                        <div class="quantity-control">
+                            <button type="button" class="quantity-btn minus" data-target="qty-babat">-</button>
+                            <input type="number" id="qty-babat" class="quantity-input" value="1" min="1" max="10">
+                            <button type="button" class="quantity-btn plus" data-target="qty-babat">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alamat-babat">Alamat Pengantaran:</label>
+                        <textarea id="alamat-babat" rows="3" placeholder="Masukkan alamat lengkap pengantaran..." required></textarea>
+                    </div>
+                    
+                    <div class="total-price" id="total-babat">Total: Rp 18.000</div>
+                    
+                    <button type="submit" class="order-btn">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan via WhatsApp
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Nasi Goreng Mawut -->
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-icon"><i class="fas fa-pepper-hot"></i></div>
+                    <h2 class="item-title">Nasi Goreng Mawut</h2>
+                </div>
+                
+<div class="placeholder-image">
+    <img src="gb3.jpg" alt="Gambar 3">
+</div>
+
+                
+                <div class="item-details">
+                    <div class="detail-row">
+                        <span>Harga per porsi:</span>
+                        <span>Rp 16.000</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Tersedia:</span>
+                        <span class="availability available">10 porsi</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Level Pedas:</span>
+                        <span>Bisa disesuaikan</span>
+                    </div>
+                </div>
+                
+                <form class="order-form" id="form-mawut">
+                    <div class="form-group">
+                        <label for="qty-mawut">Jumlah Pesanan:</label>
+                        <div class="quantity-control">
+                            <button type="button" class="quantity-btn minus" data-target="qty-mawut">-</button>
+                            <input type="number" id="qty-mawut" class="quantity-input" value="1" min="1" max="10">
+                            <button type="button" class="quantity-btn plus" data-target="qty-mawut">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alamat-mawut">Alamat Pengantaran:</label>
+                        <textarea id="alamat-mawut" rows="3" placeholder="Masukkan alamat lengkap pengantaran..." required></textarea>
+                    </div>
+                    
+                    <div class="total-price" id="total-mawut">Total: Rp 16.000</div>
+                    
+                    <button type="submit" class="order-btn">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Nasi Goreng Nikmat. Depan SMPN Unggulan 1 P. Morotai</p>
+            <p>Jam operasional: Setiap hari 10:00 - 22:00 WIB</p>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Pesanan Anda sedang dikirim via WhatsApp...
+    </div>
+
+    <script>
+        // Data harga untuk setiap menu
+        const hargaMenu = {
+            'kampung': 13000,
+            'babat': 18000,
+            'mawut': 16000
+        };
+        
+        // Fungsi untuk memperbarui total harga
+        function updateTotal(menuId) {
+            const quantity = parseInt(document.getElementById(`qty-${menuId}`).value);
+            const totalElement = document.getElementById(`total-${menuId}`);
+            const total = hargaMenu[menuId] * quantity;
+            totalElement.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+        }
+        
+        // Inisialisasi total harga untuk setiap menu
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update total untuk semua menu saat halaman dimuat
+            updateTotal('kampung');
+            updateTotal('babat');
+            updateTotal('mawut');
+            
+            // Tambahkan event listener untuk tombol plus/minus
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const inputElement = document.getElementById(targetId);
+                    let currentValue = parseInt(inputElement.value);
+                    
+                    if (this.classList.contains('minus') && currentValue > 1) {
+                        inputElement.value = currentValue - 1;
+                    } else if (this.classList.contains('plus') && currentValue < 10) {
+                        inputElement.value = currentValue + 1;
+                    }
+                    
+                    // Perbarui total harga
+                    const menuId = targetId.replace('qty-', '');
+                    updateTotal(menuId);
+                });
+            });
+            
+            // Tambahkan event listener untuk input jumlah
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    let value = parseInt(this.value);
+                    
+                    // Validasi nilai
+                    if (isNaN(value) || value < 1) {
+                        this.value = 1;
+                    } else if (value > 10) {
+                        this.value = 10;
+                    }
+                    
+                    // Perbarui total harga
+                    const menuId = this.id.replace('qty-', '');
+                    updateTotal(menuId);
+                });
+            });
+            
+            // Tambahkan event listener untuk form submission
+            document.querySelectorAll('.order-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Dapatkan ID menu dari form ID
+                    const menuId = this.id.replace('form-', '');
+                    
+                    // Dapatkan data pesanan
+                    const quantity = document.getElementById(`qty-${menuId}`).value;
+                    const address = document.getElementById(`alamat-${menuId}`).value;
+                    const total = hargaMenu[menuId] * parseInt(quantity);
+                    
+                    // Validasi alamat
+                    if (!address.trim()) {
+                        showNotification('Harap masukkan alamat pengantaran!', true);
+                        return;
+                    }
+                    
+                    // Dapatkan nama menu berdasarkan ID
+                    let menuName;
+                    switch(menuId) {
+                        case 'kampung': menuName = 'Nasi Goreng Kampung'; break;
+                        case 'babat': menuName = 'Nasi Goreng Babat'; break;
+                        case 'mawut': menuName = 'Nasi Goreng Mawut'; break;
+                        default: menuName = 'Nasi Goreng';
+                    }
+                    
+                    // Format pesan untuk WhatsApp
+                    const phoneNumber = '085175002479';
+                    const message = `Halo, saya ingin memesan:\n\n` +
+                                   `Menu: ${menuName}\n` +
+                                   `Jumlah: ${quantity} porsi\n` +
+                                   `Total Harga: Rp ${total.toLocaleString('id-ID')}\n` +
+                                   `Alamat Pengantaran: ${address}\n\n` +
+                                   `Apakah pesanan ini bisa diproses?`;
+                    
+                    // Encode pesan untuk URL
+                    const encodedMessage = encodeURIComponent(message);
+                    
+                    // Buat URL WhatsApp
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                    
+                    // Buka WhatsApp di tab baru
+                    window.open(whatsappURL, '_blank');
+                    
+                    // Tampilkan notifikasi
+                    showNotification(`Pesanan ${menuName} sedang dikirim via WhatsApp...`);
+                    
+                    // Reset form (opsional)
+                    // this.reset();
+                    // updateTotal(menuId);
+                });
+            });
+        });
+        
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            
+            if (isError) {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+            
+            notification.classList.add('show');
+            
+            // Sembunyikan notifikasi setelah 5 detik
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
